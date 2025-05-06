@@ -5,12 +5,18 @@ import Projects from "../pages/Projects/Projects";
 import Tasks from "../pages/Tasks/Tasks";
 
 export const useRoutes = () => {
+  const path = {
+    MAIN: "/",
+    PROJECTS: "projects",
+    TASKS: "tasks",
+  };
+
   return (
     <Routes>
-      <Route path="/" element={<LayoutPage />}>
+      <Route path={path.MAIN} element={<LayoutPage />}>
         <Route index element={<Main />} />
-        <Route path="projects" element={<Projects />} />
-        <Route path="tasks" element={<Tasks />} />
+        <Route path={path.PROJECTS} element={<Projects />} />
+        <Route path={path.TASKS} element={<Tasks />} />
       </Route>
     </Routes>
   );
