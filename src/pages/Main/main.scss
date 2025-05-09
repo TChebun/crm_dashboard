@@ -12,6 +12,13 @@
     font-size: 14px;
   }
 
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+  }
+
   &__sum {
     font-family: "RM", sans-serif;
     font-size: 20px;

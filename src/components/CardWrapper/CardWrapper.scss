@@ -1,0 +1,43 @@
+@use "../../assets/scss/fonts";
+
+.card-wrapper {
+  .ant-radio-button-wrapper {
+    border-color: transparent;
+    padding: 0 16px;
+    height: 40px;
+    line-height: 40px;
+
+    &::before {
+      content: none;
+    }
+    .ant-radio-button {
+      border-radius: 10px;
+      border: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      &-label {
+        font-family: "RM", sans-serif;
+      }
+    }
+
+    &-checked {
+      color: #000000;
+      .ant-radio-button {
+        border-color: #eeeef4;
+      }
+      &:first-child {
+        border-color: transparent;
+        .ant-radio-button {
+          border-color: #eeeef4;
+        }
+      }
+    }
+
+    &:hover {
+      color: #000000;
+      border-color: transparent;
+      .ant-radio-button {
+        border-color: #eeeef4;
+      }
+    }
+  }
+}

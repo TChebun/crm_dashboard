@@ -1,25 +1,24 @@
 import React from "react";
-import { Card, Flex, Progress } from "antd";
+import { Card, Flex, Progress, Row, Col } from "antd";
+import CardWrapper from "../CardWrapper/CardWrapper";
 
 import { ArrowUpOutlined, ArrowDownOutlined } from "@ant-design/icons";
 
 const DashboardCard = ({ title, description, sum, color, progress, progressColor, down }) => {
   return (
-    <Card>
-      <Flex align="center" justify="space-between">
-        <div className="main__box">
-          <div className="main__title">{title}</div>
-          <div className="main__description">{description}</div>
-        </div>
+    <CardWrapper title={title} description={description}>
+      <Col span={6}>
         <div className="main__item">
-          <Flex align="center" gap={8}>
+          <Flex align="center" justify="flex-end" gap={8}>
             <div className="main__sum">{sum}</div>
             {down ? <ArrowDownOutlined style={{ color: color }} /> : <ArrowUpOutlined style={{ color: color }} />}
           </Flex>
         </div>
-      </Flex>
-      <Progress percent={progress} showInfo={false} strokeColor={progressColor} size={{ height: 4 }} />
-    </Card>
+      </Col>
+      <Col span={24}>
+        <Progress percent={progress} showInfo={false} strokeColor={progressColor} size={{ height: 4 }} />
+      </Col>
+    </CardWrapper>
   );
 };
 

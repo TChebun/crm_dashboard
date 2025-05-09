@@ -4,6 +4,7 @@ import { ConfigProvider } from "antd";
 const theme = {
   token: {
     colorText: "#8b8b98",
+    colorBorder: "transparent",
   },
   components: {
     Layout: {
@@ -15,9 +16,9 @@ const theme = {
     Menu: {
       itemBorderRadius: 5,
     },
-    // Header: {
-    //   headerHeight: 90,
-    // },
+    Card: {
+      bodyPadding: "16px 24px",
+    },
   },
 };
 
