@@ -1,83 +1,90 @@
-import React, { useEffect, useState } from "react";
-import { Row, Col } from "antd";
+import { useEffect, useState } from "react";
+import { Row, Col, Tag, Table } from "antd";
 import { AreaChart, Area, XAxis, CartesianGrid, Tooltip } from "recharts";
 import DashboardCard from "../../components/DashboardCard/DashboardCard";
 import CardWrapper from "../../components/CardWrapper/CardWrapper";
 
-import { upperCards } from "./dictionary";
+import { UPPERCARDS, ORDERSDAY, ORDERSWEEK, ORDERSMONTH, PLANNEDMONTH, TABLEDAY } from "./dictionary";
 
 import "./main.scss";
 
-const data = [
+const columns = [
   {
-    name: "Jan",
-    uv: 4000,
-    pv: 2400,
+    title: "Product",
+    dataIndex: "product",
+    key: "product",
+    render: (text) => (
+      <div className="table-product__box">
+        <span className="table-product__name">{text.name}</span>
+        <span className="table-product__item">{text.id}</span>
+      </div>
+    ),
   },
   {
-    name: "Feb",
-    uv: 3000,
-    pv: 1398,
+    title: "Customer",
+    dataIndex: "customer",
+    key: "customer",
+    render: (text) => (
+      <div className="table-product__box">
+        <span className="table-product__name">{text.name}</span>
+        <span className="table-product__item">{text.email}</span>
+      </div>
+    ),
   },
   {
-    name: "Mar",
-    uv: 2000,
-    pv: 9800,
+    title: "Delivery",
+    dataIndex: "delivery",
+    key: "delivery",
+    render: (text) => (
+      <div className="table-product__box">
+        <span className="table-product__name">{text.country}</span>
+        <span className="table-product__item">{text.address}</span>
+      </div>
+    ),
   },
   {
-    name: "Apr",
-    uv: 2780,
-    pv: 3908,
+    title: "Shipping",
+    dataIndex: "shipping",
+    key: "shipping",
+    render: (text) => <div className="table-product__name">${text}</div>,
   },
   {
-    name: "May",
-    uv: 1890,
-    pv: 4800,
+    title: "Total",
+    dataIndex: "total",
+    key: "total",
+    render: (text) => <div className="table-product__name">${text}</div>,
   },
   {
-    name: "Jun",
-    uv: 2390,
-    pv: 3800,
-  },
-  {
-    name: "Jul",
-    uv: 3490,
-    pv: 4300,
-  },
-  {
-    name: "Aug",
-    uv: 3490,
-    pv: 4300,
-  },
-  {
-    name: "Sep",
-    uv: 3490,
-    pv: 4300,
-  },
-  {
-    name: "Oct",
-    uv: 3490,
-    pv: 4300,
-  },
-  {
-    name: "Nov",
-    uv: 3490,
-    pv: 4300,
-  },
-  {
-    name: "Dec",
-    uv: 3490,
-    pv: 4300,
+    title: "Status",
+    key: "status",
+    dataIndex: "status",
+    render: (text) => {
+      let color;
+      if (text === "Shipped") {
+        color = "green";
+      } else {
+        color = "gold";
+      }
+      return <Tag color={color}>{text}</Tag>;
+    },
   },
 ];
 
 const Main = () => {
   const [ordersPeriod, setOrdersPeriod] = useState("day");
   const [salesPeriod, setSalesPeriod] = useState("day");
+  const [orders, SetOrders] = useState([]);
+
+  useEffect(() => {
+    if (ordersPeriod === "day") SetOrders(ORDERSDAY);
+    if (ordersPeriod === "week") SetOrders(ORDERSWEEK);
+    if (ordersPeriod === "month") SetOrders(ORDERSMONTH);
+  }, [ordersPeriod]);
+
   return (
     <div className="main">
       <Row gutter={[30, 30]}>
-        {upperCards.map((el) => (
+        {UPPERCARDS.map((el) => (
           <Col key={el.sum} span={8}>
             <DashboardCard
               title={el.title}
@@ -92,31 +99,58 @@ const Main = () => {
         ))}
         <Col span={16}>
           <CardWrapper title="Orders" period={ordersPeriod} setPeriod={setOrdersPeriod}>
-            <AreaChart
-              width={1160}
-              height={260}
-              data={data}
-              margin={{
-                top: 10,
-                right: 30,
-                left: 0,
-                bottom: 0,
-              }}
-            >
-              <CartesianGrid horizontal={false} strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <Tooltip />
-              <Area type="monotone" dataKey="uv" stackId="1" fillOpacity={0.4} stroke="#7CE7AC" fill="#7CE7AC" />
-              <Area type="monotone" dataKey="pv" stackId="1" fillOpacity={0.4} stroke="#5E81F4" fill="#5E81F4" />
-            </AreaChart>
+            <Col span={24}>
+              <AreaChart
+                className="main__chart"
+                width={1184}
+                height={260}
+                data={orders}
+                margin={{
+                  top: 10,
+                  right: 30,
+                  left: 0,
+                  bottom: 0,
+                }}
+              >
+                <CartesianGrid horizontal={false} strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <Tooltip />
+                <Area type="monotone" dataKey="uv" stackId="1" fillOpacity={0.4} stroke="#7CE7AC" fill="#7CE7AC" />
+                <Area type="monotone" dataKey="pv" stackId="1" fillOpacity={0.4} stroke="#5E81F4" fill="#5E81F4" />
+              </AreaChart>
+            </Col>
           </CardWrapper>
         </Col>
         <Col span={8}>
-          <CardWrapper title="Planned Income">2</CardWrapper>
+          <CardWrapper title="Planned Income">
+            <Col span={24}>
+              <AreaChart
+                className="main__chart"
+                width={586}
+                height={260}
+                data={PLANNEDMONTH}
+                margin={{
+                  top: 10,
+                  right: 30,
+                  left: 0,
+                  bottom: 0,
+                }}
+              >
+                <CartesianGrid horizontal={false} strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <Tooltip />
+                <Area type="monotone" dataKey="uv" stackId="1" fillOpacity={0.4} stroke="#9698D6" fill="#9698D6" />
+              </AreaChart>
+            </Col>
+          </CardWrapper>
         </Col>
         <Col span={24}>
           <CardWrapper title="Latest Sales" period={salesPeriod} setPeriod={setSalesPeriod}>
-            3
+            <Col span={24}>
+              <div className="main__table">
+                <Table columns={columns} dataSource={TABLEDAY} />
+              </div>
+            </Col>
           </CardWrapper>
         </Col>
       </Row>

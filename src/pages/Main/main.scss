@@ -12,16 +12,37 @@
     font-size: 14px;
   }
 
+  &__box {
+    margin: 16px 24px 0;
+  }
+
+  &__period {
+    padding: 16px 24px 0;
+  }
+
+  &__progress {
+    padding: 0 24px 16px;
+  }
+
+  &__table {
+    margin: 20px 0;
+  }
+
   &__item {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     height: 100%;
+    padding: 16px 24px 0;
   }
 
   &__sum {
     font-family: "RM", sans-serif;
     font-size: 20px;
     color: #000000;
+  }
+
+  &__chart {
+    margin: 20px 0;
   }
 }

@@ -16,7 +16,13 @@ const DashboardCard = ({ title, description, sum, color, progress, progressColor
         </div>
       </Col>
       <Col span={24}>
-        <Progress percent={progress} showInfo={false} strokeColor={progressColor} size={{ height: 4 }} />
+        <Progress
+          percent={progress}
+          showInfo={false}
+          strokeColor={progressColor}
+          size={{ height: 4 }}
+          className="main__progress"
+        />
       </Col>
     </CardWrapper>
   );

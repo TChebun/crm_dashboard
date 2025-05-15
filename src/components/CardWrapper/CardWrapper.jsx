@@ -20,7 +20,7 @@ const CardWrapper = ({ children, title, description, period, setPeriod }) => {
         {period ? (
           <Col span={6}>
             <Flex justify="flex-end">
-              <Radio.Group value={period} onChange={handlePeriod}>
+              <Radio.Group value={period} onChange={handlePeriod} className="main__period">
                 <Radio.Button value="day">Day</Radio.Button>
                 <Radio.Button value="week">Week</Radio.Button>
                 <Radio.Button value="month">Month</Radio.Button>

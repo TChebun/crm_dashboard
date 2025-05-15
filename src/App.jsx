@@ -17,7 +17,7 @@ const theme = {
       itemBorderRadius: 5,
     },
     Card: {
-      bodyPadding: "16px 24px",
+      bodyPadding: "0",
     },
   },
 };
