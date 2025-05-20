@@ -45,4 +45,23 @@
   &__chart {
     margin: 20px 0;
   }
+
+  &__table {
+    .table-product {
+      &__box {
+        display: flex;
+        flex-direction: column;
+        row-gap: 0.125rem;
+      }
+      &__name {
+        color: #000000;
+        font-family: "RM", sans-serif;
+      }
+
+      &__item {
+        color: #000000;
+        font-family: "RR", sans-serif;
+      }
+    }
+  }
 }

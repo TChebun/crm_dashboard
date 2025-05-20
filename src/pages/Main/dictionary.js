@@ -280,11 +280,11 @@ export const TABLEDAY = [
   {
     key: "1",
     product: {
-      name: "Macbook Pro",
+      name: "Macbook",
       id: "10-32-3456-18",
     },
     customer: {
-      name: "John Brown",
+      name: "John Anderson",
       email: "brown@gmail.com",
     },
     delivery: {
@@ -302,7 +302,7 @@ export const TABLEDAY = [
       id: "10-32-3456-18",
     },
     customer: {
-      name: "John Brown",
+      name: "Skylar Brown",
       email: "brown@gmail.com",
     },
     delivery: {
@@ -316,11 +316,11 @@ export const TABLEDAY = [
   {
     key: "3",
     product: {
-      name: "Macbook Pro",
+      name: "Iphone",
       id: "10-32-3456-18",
     },
     customer: {
-      name: "John Brown",
+      name: "John Doe",
       email: "brown@gmail.com",
     },
     delivery: {
@@ -334,11 +334,11 @@ export const TABLEDAY = [
   {
     key: "4",
     product: {
-      name: "Macbook Pro",
+      name: "Android",
       id: "10-32-3456-18",
     },
     customer: {
-      name: "John Brown",
+      name: "Malder",
       email: "brown@gmail.com",
     },
     delivery: {
@@ -352,11 +352,11 @@ export const TABLEDAY = [
   {
     key: "5",
     product: {
-      name: "Macbook Pro",
+      name: "Пылесос",
       id: "10-32-3456-18",
     },
     customer: {
-      name: "John Brown",
+      name: "Евдокия",
       email: "brown@gmail.com",
     },
     delivery: {

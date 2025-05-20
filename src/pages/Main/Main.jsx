@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Row, Col, Tag, Table } from "antd";
+import { Row, Col, Tag, Table, Empty } from "antd";
 import { AreaChart, Area, XAxis, CartesianGrid, Tooltip } from "recharts";
 import DashboardCard from "../../components/DashboardCard/DashboardCard";
 import CardWrapper from "../../components/CardWrapper/CardWrapper";
@@ -8,78 +8,131 @@ import { UPPERCARDS, ORDERSDAY, ORDERSWEEK, ORDERSMONTH, PLANNEDMONTH, TABLEDAY 
 
 import "./main.scss";
 
-const columns = [
-  {
-    title: "Product",
-    dataIndex: "product",
-    key: "product",
-    render: (text) => (
-      <div className="table-product__box">
-        <span className="table-product__name">{text.name}</span>
-        <span className="table-product__item">{text.id}</span>
-      </div>
-    ),
-  },
-  {
-    title: "Customer",
-    dataIndex: "customer",
-    key: "customer",
-    render: (text) => (
-      <div className="table-product__box">
-        <span className="table-product__name">{text.name}</span>
-        <span className="table-product__item">{text.email}</span>
-      </div>
-    ),
-  },
-  {
-    title: "Delivery",
-    dataIndex: "delivery",
-    key: "delivery",
-    render: (text) => (
-      <div className="table-product__box">
-        <span className="table-product__name">{text.country}</span>
-        <span className="table-product__item">{text.address}</span>
-      </div>
-    ),
-  },
-  {
-    title: "Shipping",
-    dataIndex: "shipping",
-    key: "shipping",
-    render: (text) => <div className="table-product__name">${text}</div>,
-  },
-  {
-    title: "Total",
-    dataIndex: "total",
-    key: "total",
-    render: (text) => <div className="table-product__name">${text}</div>,
-  },
-  {
-    title: "Status",
-    key: "status",
-    dataIndex: "status",
-    render: (text) => {
-      let color;
-      if (text === "Shipped") {
-        color = "green";
-      } else {
-        color = "gold";
-      }
-      return <Tag color={color}>{text}</Tag>;
-    },
-  },
-];
-
 const Main = () => {
   const [ordersPeriod, setOrdersPeriod] = useState("day");
   const [salesPeriod, setSalesPeriod] = useState("day");
   const [orders, SetOrders] = useState([]);
+  const [dataTable, setDataTable] = useState([]);
+  const [filter, setFilter] = useState("");
+  const [sorter, setSorter] = useState("");
+
+  const handleTableChange = (_, filters, sort) => {
+    if (filters) {
+      setFilter(filters.status);
+    }
+
+    if (sort) {
+    }
+  };
+
+  const columns = [
+    {
+      title: "Product",
+      dataIndex: "product",
+      key: "product",
+      render: (text) => (
+        <div className="table-product__box">
+          <span className="table-product__name">{text.name}</span>
+          <span className="table-product__item">{text.id}</span>
+        </div>
+      ),
+    },
+    {
+      title: "Customer",
+      dataIndex: "customer",
+      key: "customer",
+      render: (text) => (
+        <div className="table-product__box">
+          <span className="table-product__name">{text.name}</span>
+          <span className="table-product__item">{text.email}</span>
+        </div>
+      ),
+    },
+    {
+      title: "Delivery",
+      dataIndex: "delivery",
+      key: "delivery",
+      render: (text) => (
+        <div className="table-product__box">
+          <span className="table-product__name">{text.country}</span>
+          <span className="table-product__item">{text.address}</span>
+        </div>
+      ),
+    },
+    {
+      title: "Shipping",
+      dataIndex: "shipping",
+      key: "shipping",
+      render: (text) => <div className="table-product__name">${text}</div>,
+    },
+    {
+      title: "Total",
+      dataIndex: "total",
+      key: "total",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.total - b.total,
+      render: (text) => <div className="table-product__name">${text}</div>,
+    },
+    {
+      title: "Status",
+      key: "status",
+      dataIndex: "status",
+      filters: [
+        {
+          text: "Shipped",
+          value: "Shipped",
+        },
+        {
+          text: "Delivery",
+          value: "Delivery",
+        },
+        {
+          text: "Processing",
+          value: "Processing",
+        },
+      ],
+      // onFilter: (value, record) => {
+      //   // console.log("value: " + value);
+      //   // console.log(record);
+      //   // const data = TABLEDAY.filter((el) => el.status.indexOf(value) === 0);
+
+      //   setFilter(value);
+      //   // console.log(record.status.indexOf(value));
+      //   return record.status.indexOf(value) === 0;
+      // },
+      render: (text) => {
+        let color;
+        if (text === "Shipped") {
+          color = "green";
+        } else {
+          color = "gold";
+        }
+        return <Tag color={color}>{text}</Tag>;
+      },
+    },
+  ];
 
   useEffect(() => {
     if (ordersPeriod === "day") SetOrders(ORDERSDAY);
     if (ordersPeriod === "week") SetOrders(ORDERSWEEK);
     if (ordersPeriod === "month") SetOrders(ORDERSMONTH);
   }, [ordersPeriod]);
+
+  useEffect(() => {
+    setDataTable(TABLEDAY.filter((_, ind) => ind < 3));
+  }, []);
+
+  useEffect(() => {
+    if (filter) {
+      const data = filter.reduce((prev, cur) => {
+        const el = TABLEDAY.filter((el) => el.status === cur);
+
+        return [...prev, ...el];
+      }, []);
+
+      setDataTable(data.filter((_, ind) => ind < 3));
+    }
+  }, [filter]);
 
   return (
     <div className="main">
@@ -148,7 +201,13 @@ const Main = () => {
           <CardWrapper title="Latest Sales" period={salesPeriod} setPeriod={setSalesPeriod}>
             <Col span={24}>
               <div className="main__table">
-                <Table columns={columns} dataSource={TABLEDAY} />
+                <Table
+                  onChange={handleTableChange}
+                  columns={columns}
+                  dataSource={dataTable}
+                  locale={<Empty description="Пусто" />}
+                  pagination={false}
+                />
               </div>
             </Col>
           </CardWrapper>

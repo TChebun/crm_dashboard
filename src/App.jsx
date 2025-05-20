@@ -19,6 +19,12 @@ const theme = {
     Card: {
       bodyPadding: "0",
     },
+    Table: {
+      headerBg: "#f5f5fa",
+      headerBorderRadius: 0,
+      headerColor: "#8b8b98",
+      borderColor: "transparent",
+    },
   },
 };
 

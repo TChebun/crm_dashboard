@@ -23,16 +23,23 @@ body {
 
 .sider {
   padding-top: 1.25rem;
-
+  height: 100vh;
+  position: sticky;
+  top: 0;
   &__logo {
     padding-bottom: 1.25rem;
   }
   &__link {
     font-family: "RM", sans-serif;
   }
-}
 
-.ant-layout {
-  font-family: "RR", sans-serif;
-  font-size: 16px;
+  .ant-menu-light.ant-menu-root.ant-menu-inline,
+  .ant-menu-light.ant-menu-root.ant-menu-vertical {
+    border-inline-end: none;
+  }
+
+  .ant-layout {
+    font-family: "RR", sans-serif;
+    font-size: 16px;
+  }
 }
