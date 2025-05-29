@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Row, Col, Radio, Flex } from "antd";
 
 import "./CardWrapper.scss";
@@ -11,12 +10,14 @@ const CardWrapper = ({ children, title, description, period, setPeriod }) => {
   return (
     <Card className="card-wrapper">
       <Row gutter={[20, 5]}>
-        <Col span={18}>
-          <div className="main__box">
-            <div className="main__title">{title}</div>
-            {description ? <div className="main__description">{description}</div> : null}
-          </div>
-        </Col>
+        {title ? (
+          <Col span={18}>
+            <div className="main__box">
+              <div className="main__title">{title}</div>
+              {description ? <div className="main__description">{description}</div> : null}
+            </div>
+          </Col>
+        ) : null}
         {period ? (
           <Col span={6}>
             <Flex justify="flex-end">
