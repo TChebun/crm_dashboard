@@ -1,22 +1,27 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { Col, Checkbox, Input, Flex } from "antd";
 import CardWrapper from "../../components/CardWrapper/CardWrapper";
 import TaskModal from "../../components/TaskModal/TaskModal";
+import { getTasks } from "../../store/tasks/tasks";
+
 import "./tasks.scss";
 
 const Tasks = () => {
+  const dispatch = useDispatch();
+  const { tasks } = useSelector((state) => state.tasks);
   const [taskName, setTaskName] = useState("");
   const [taskStatus, setTaskStatus] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-  const [tasks, setTasks] = useState([]);
+  const [openModal, setOpenModal] = useState("");
 
   const createTask = () => {
     const task = {
       name: taskName,
       status: taskStatus,
     };
-    setTasks([...tasks, task]);
+
+    dispatch(getTasks([...tasks, task]));
 
     setTaskName("");
     setTaskStatus(false);
@@ -24,6 +29,7 @@ const Tasks = () => {
 
   return (
     <CardWrapper>
+      {openModal && createPortal(<TaskModal name={openModal} setOpenModal={setOpenModal} />, document.body)}
       <Col span={24}>
         <div className="task-page">
           <div className="task-page__create task-page__item">
@@ -43,12 +49,11 @@ const Tasks = () => {
                 <Flex justify="space-between" align="center">
                   <div className="task-page__box">
                     <Checkbox checked={el.status} />
-                    <button onClick={() => setOpenModal(true)} className="task-page__view-name">
+                    <button onClick={() => setOpenModal(el.name)} className="task-page__view-name">
                       {el.name}
                     </button>
                   </div>
                 </Flex>
-                {openModal && createPortal(<TaskModal name={el.name} setOpenModal={setOpenModal} />, document.body)}
               </div>
             ))}
           </Flex>

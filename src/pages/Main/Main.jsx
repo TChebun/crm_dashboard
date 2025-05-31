@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Row, Col, Tag, Table, Empty } from "antd";
 import { AreaChart, Area, XAxis, CartesianGrid, Tooltip } from "recharts";
 import DashboardCard from "../../components/DashboardCard/DashboardCard";
@@ -9,12 +10,15 @@ import { UPPERCARDS, ORDERSDAY, ORDERSWEEK, ORDERSMONTH, PLANNEDMONTH, TABLEDAY 
 import "./main.scss";
 
 const Main = () => {
+  const state = useSelector((state) => state);
   const [ordersPeriod, setOrdersPeriod] = useState("day");
   const [salesPeriod, setSalesPeriod] = useState("day");
   const [orders, SetOrders] = useState([]);
   const [dataTable, setDataTable] = useState([]);
   const [filter, setFilter] = useState("");
   const [sorter, setSorter] = useState("");
+
+  console.log(state);
 
   const handleTableChange = (_, filters, sort) => {
     if (filters) {

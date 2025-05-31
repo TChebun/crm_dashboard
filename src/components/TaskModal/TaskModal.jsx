@@ -4,6 +4,7 @@ import "./TaskModal.scss";
 
 const TaskModal = ({ name, setOpenModal }) => {
   const ref = useRef(null);
+  console.log(name);
 
   const handleOutsideClick = (evt) => {
     if (ref.current && evt.target.classList[0] === "modal") {
